@@ -1,0 +1,119 @@
+<DOCTYPE! html>
+<html>
+  <head>
+    <title>Flow Entertainment</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet"/>
+    <link href="main.css" rel="stylesheet" />
+  </head>
+  <script>
+    var playing = false;
+    function play(){ 
+      var audio = document.getElementById('myaudio');
+      if(!playing){
+        audio.play();
+        playing = true;
+      } else{
+        audio.pause();
+        playing = false;
+      }
+    } 
+  </script>
+  <body ondblclick="play()" onscroll="disableScrolling()" 
+  onmousewheel="enableScrolling()" 
+   onclick="enableScrolling()">
+   <audio id="myaudio" autoplay >
+    <source src="music/Evergreen.mp3" type="audio/mpeg">
+    <source src="music/Evergreen.mp3" type="audio/mp3">
+  </audio>
+    <header>
+      <a href="main.html" class="logo" aria-label="homepage">flow.</a>
+      <nav class="main_nav">
+        <ul class="nav_list">
+          <li class="nav_list-item"><a href="main.html" class="nav_link">Home</a></li>
+          <li class="nav_list-item"><a href="about.html" class="nav_link">About</a></li>
+          <li class="nav_list-item"><a href="gallery.html" class="nav_link">Gallery</a></li>
+          <li class="nav_list-item"><a href="community.html" class="nav_link">Community</a></li>
+          <li class="nav_list-item"><a href="contacts.html" class="nav_link">Contacts</a></li>
+        </ul>
+      </nav>
+      <nav>
+        <ul class="nav_list">
+          <li class="nav_list-item"><a href="login/index.html" class="nav_link nav_link--btn">Login</a></li>
+          <li class="nav_list-item"><a href="login/create.html" class="nav_link nav_link--btn nav_link--btn--highlight">Join</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <main style="background: linear-gradient(-45deg, #23d5ab, #ee7752, #e73c7e, #23a6d5); background-size: 400% 400%;
+    animation: gradient 15s ease infinite">
+    <div class="ob">
+      <section class="home-intro-gal">
+        <img src="img/logo.png" alt="Logo.png">
+        <h1>A continuous stream of entertainment</h1>
+      </section>
+      <div style="background-color:whitesmoke; height: 3%; opacity: 70%;"></div>
+    </div>
+    <div class="about" style=" letter-spacing: 1px; line-height: 2;">
+      <div class="home-about">
+        <h2>Gallery</h2>
+        <div class="columns">
+            <p>
+                Get a glimpse of us working, our studio, games we enjoy or are inspired from, or random images that we enjoy!(You might see references to them in future games, so keep your eyes wide open!)
+            </p>
+        </div>
+        <div class="columns "style="display: flex; justify-content: center; width:80%; height: 500px">
+          <img class="slideshowimg" style="display: none; width: 40%;" src="img/games2.png" alt="Fill Murray">
+          <img class="slideshowimg" style="display: none; width: 40%;" src="img/games3.jpg" alt="Place Cage">
+          <img class="slideshowimg" style="display: none; width: 40%;" src="img/cover.png" alt="Place Cage">
+      </div>
+      <div class="home-about">
+        <input id="radio1" class="radios" style="position:relative" type="radio" disabled>
+        <input id="radio2" class="radios" style="position:relative" type="radio" disabled>
+        <input id="radio3" class="radios" style="position:relative" type="radio" disabled>
+      </div>
+       </div>
+       <div class="home-about" style="align-items: center; text-align: center; margin-top: -20%;">
+        <img src="img/naomi.jpg" alt="" style="width: 80%; margin: 5%;">
+        Our company appreciates the work of artists like Naomi. Their cute artstyle is something that inspires us on our own work. Go and show them some support!
+        <img src="img/bv.jpg" alt="" style="width: 80%;  margin: 5%;">
+        That's our founder during his younger years! He's using Ruby to make one of his first programs ever, and he sure looks excited about it!
+        <img src="img/hk.jpg" alt="" style="width: 80%;  margin: 5%;">
+        Hollow Knight is one of the games that inspired us to create this company to start with. The team behind it, Team Cherry, continues to inspire us to this day. Go and show them your support! 
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="home-about-foot">
+          <div class="columns" style="flex-direction: column;">
+            <div style="margin: 2%;display: flex; flex-direction: row; justify-content: space-evenly;">
+              <a href="main.html" class="logo" aria-label="homepage">flow.</a>            
+              <ul class="nav_list" style="margin-top: -5px;">
+                <li class="nav_list-item"><a href="main.html" class="nav_link">Home</a></li>
+                <li class="nav_list-item"><a href="about.html" class="nav_link">About</a></li>
+                <li class="nav_list-item"><a href="gallery.html" class="nav_link">Gallery</a></li>
+                <li class="nav_list-item"><a href="community.html" class="nav_link">Community</a></li>
+                <li class="nav_list-item"><a href="contacts.html" class="nav_link">Contacts</a></li>
+              </ul>
+                <a target="_blank" href="https://www.facebook.com/Flow-Entertainment-100628881531882/?modal=admin_todo_tour%22%3E"><img class="ftimg" src="img/facebook.png" height="30" width="30" alt="Facebook.png"></a>
+                <a target="_blank" href="https://www.instagram.com/flow.entertainment.games/%22%3E"><img class="ftimg" src="img/instagram.png" height="30" width="30" alt="Instagram.png"></a>
+                <a target="_blank" href="https://www.youtube.com/channel/UCk1H9Uwr8k82EouBomBjosA?view_as=subscriber%22%3E"><img src="img/youtube.png" height="30" width="30" alt="Youtube.png"></a>
+            </div>
+            <hr>
+            <div style="margin: 2%;display: flex; flex-direction: row; justify-content: space-evenly; align-items: center;">
+            <div style="font-size: 11px;">
+              <h2>Our Company</h2>
+              <p>Flow Entertainment aims to create entertainment for you, from you, and with you.</p>
+            </div>
+            <hr style="height: 50px; margin: 2%;">
+            <div style="font-size: 10px; opacity: 80%;">© 2021 Flow Entertainment, Inc, All Rights Reserved.</div>
+          </div>
+           </div>
+          </div>
+        </div>
+    </main>
+    <script src="observers.js"></script>
+    <script src="slideshow.js"></script>
+    </main>
+  </body>
+</html>
