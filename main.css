@@ -129,7 +129,7 @@ header {
   box-shadow: 0 3px 20px rgba(0, 0, 0, 0.2); 
 }
 /*Vetite e perbashketa te background ne fillim te faqes*/
-.home-intro, .home-intro-abt, .home-intro-gal, .home-intro-com, .home-intro-con {
+.home-intro, .home-intro-abt, .home-intro-gal, .home-intro-com, .home-intro-con, .home-intro-gam{
   padding: 50vh 0;
   background: url(img/giphy.gif);
   background-size:100% 100%;
@@ -156,6 +156,12 @@ header {
   background: url(img/bg5.png);
   background-size: cover;
 }
+.home-intro-gam {
+  background: url(img/games6.png);
+  background-size: cover;
+  filter: brigtness(8%)
+}
+
 
 .abt-intro{
   flex-direction: column;
@@ -200,7 +206,7 @@ main {
   }
 }
 
-.home-about-abt, .home-about-gal, .home-about-com, .home-about-con {
+.home-about-abt, .home-about-gal, .home-about-com, .home-about-con, .home-about-gam {
   padding: 64px 0;
   max-width: 900px;
   margin: 0 auto;
