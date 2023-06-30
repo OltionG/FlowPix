@@ -5,6 +5,12 @@
     <link
       href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet"/>
     <link href="main.css" rel="stylesheet" />
+    <style>
+       #game-container {
+            width: 800px;
+            height: 600px;
+        }
+    </style>
   </head>
   <script>
     var playing = false;
@@ -22,7 +28,7 @@
   <body ondblclick="play()" onscroll="disableScrolling()" 
   onmousewheel="enableScrolling()" 
    onclick="enableScrolling()">
-   <audio id="myaudio" autoplay >
+   <audio id="myaudio"  >
     <source src="music/Sea of Trees.mp3" type="audio/mpeg">
     <source src="music/Sea of Trees.mp3" type="audio/mp3">
   </audio>
@@ -61,12 +67,197 @@
     </div>
     <div class="about">
       <div class="home-about" style="flex-direction: column; align-items: center; letter-spacing: 1px; line-height: 2;">
-        <h2>Community</h2>
-        <div class="columns">
-            <p style="max-width: 500px;">
-              Soon, this will be the place where you put all of your ideas for us and the rest of the community to look at, and thus, the beginning of something beautiful. For now though, we're focusing on our first project, and since we don't want your ideas to go unchecked and we won't have time to follow each one, we'll open this section after we finish developing our first game. Until then!
-            </p>
-            
+        <div id="game-container"></div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.3.3/pixi.min.js"></script>
+    <script>
+        // Create a Pixi application
+        const app = new PIXI.Application({
+            width: 800,
+            height: 600,
+            backgroundColor: 0x1099bb,
+        });
+        const gameContainer = document.getElementById('game-container');
+        gameContainer.appendChild(app.view);
+
+        // Create an array of bubble images
+        const bubbleImages = [
+            'img/bubble_1.png',
+            'img/bubble_2.png',
+            'img/bubble_3.png'
+        ];
+
+        // Create an array to store the bubbles
+        const bubbles = [];
+
+        // Create a point system
+        let score = 0;
+        const scoreText = new PIXI.Text(`Score: ${score}`, { fill: '#ffffff' });
+        scoreText.position.set(10, 10);
+        app.stage.addChild(scoreText);
+
+        // Create a timer
+        let timer = 30;
+        const timerText = new PIXI.Text(`Time: ${timer}`, { fill: '#ffffff' });
+        timerText.position.set(10, 40);
+        app.stage.addChild(timerText);
+
+        // Create a round system
+        let round = 1;
+        const roundText = new PIXI.Text(`Round: ${round}`, { fill: '#ffffff' });
+        roundText.position.set(10, 70);
+        app.stage.addChild(roundText);
+
+        // Create a lives system
+        let lives = 3;
+        const livesText = new PIXI.Text(`Lives: ${lives}`, { fill: '#ffffff' });
+        livesText.position.set(10, 100);
+        app.stage.addChild(livesText);
+
+        // Create a game over message
+        const gameOverText = new PIXI.Text('', { fill: '#ffffff', fontSize: 48 });
+        gameOverText.anchor.set(0.5);
+        gameOverText.position.set(app.screen.width / 2, app.screen.height / 2);
+        gameOverText.visible = false;
+        app.stage.addChild(gameOverText);
+
+        // Create a reset button
+        const resetButton = new PIXI.Text('Reset', { fill: '#ffffff', fontSize: 32 });
+        resetButton.anchor.set(0.5);
+        resetButton.position.set(app.screen.width / 2, app.screen.height / 2 + 100);
+        resetButton.interactive = true;
+        resetButton.buttonMode = true;
+        resetButton.visible = false;
+        resetButton.on('pointerdown', resetGame);
+        app.stage.addChild(resetButton);
+
+        // Create a bubble class
+        class Bubble {
+            constructor() {
+                const randomIndex = Math.floor(Math.random() * bubbleImages.length);
+                this.sprite = PIXI.Sprite.from(bubbleImages[randomIndex]);
+                this.sprite.anchor.set(0.5);
+                this.sprite.x = Math.random() * app.screen.width;
+                this.sprite.y = app.screen.height;
+                this.sprite.interactive = true;
+                this.sprite.buttonMode = true;
+                this.speed = Math.random() * 2 + 1; // Random speed between 1 and 3
+                this.sprite.on('pointerdown', () => {
+                    this.pop();
+                });
+                app.stage.addChild(this.sprite);
+            }
+
+            pop() {
+                app.stage.removeChild(this.sprite);
+                const index = bubbles.indexOf(this);
+                if (index !== -1) {
+                    bubbles.splice(index, 1);
+                    score += 10; // Increase score by 10 when a bubble is popped
+                    scoreText.text = `Score: ${score}`;
+                }
+            }
+
+            update() {
+                this.sprite.y -= this.speed; // Move the bubble upwards based on its speed
+                if (this.sprite.y + this.sprite.height < 0) {
+                    // Bubble has gone off the screen
+                    this.miss();
+                }
+            }
+
+            miss() {
+                app.stage.removeChild(this.sprite);
+                const index = bubbles.indexOf(this);
+                if (index !== -1) {
+                    bubbles.splice(index, 1);
+                    lives--; // Decrease lives by 1 when a bubble is missed
+                    livesText.text = `Lives: ${lives}`;
+                    if (lives <= 0) {
+                        endGame();
+                    }
+                }
+            }
+        }
+
+        // Create new bubbles with increasing interval
+        let bubbleInterval = 1000;
+        let intervalId = setInterval(() => {
+            const bubble = new Bubble();
+            bubbles.push(bubble);
+        }, bubbleInterval);
+
+        // Create a game loop
+        app.ticker.add(() => {
+            // Update game logic here
+            for (const bubble of bubbles) {
+                bubble.update();
+            }
+
+            // Update timer
+            timer -= app.ticker.deltaTime / 60; // Decrease timer by deltaTime (in seconds)
+            timerText.text = `Time: ${Math.round(timer)}`;
+
+            // Speed up bubble interval every 30 seconds
+            if (timer <= 0) {
+                clearInterval(intervalId);
+                bubbleInterval *= 0.8; // Speed up interval by 20%
+                intervalId = setInterval(() => {
+                    const bubble = new Bubble();
+                    bubbles.push(bubble);
+                }, bubbleInterval);
+                timer = 30; // Reset timer to 30 seconds
+                round++; // Increase round by 1
+                roundText.text = `Round: ${round}`;
+                lives = 3; // Reset lives to 3
+                livesText.text = `Lives: ${lives}`;
+            }
+
+            // Game over condition when timer reaches 0
+            if (timer <= 0 && lives > 0) {
+                endGame();
+            }
+        });
+
+        function endGame() {
+            // Game over logic here
+            clearInterval(intervalId);
+            timerText.text = 'Game Over';
+            gameOverText.text = `You lost! Score: ${score}`;
+            gameOverText.visible = true;
+            resetButton.visible = true;
+            app.ticker.stop();
+            removeBubbles();
+        }
+
+        function resetGame() {
+            // Reset game logic here
+            score = 0;
+            scoreText.text = `Score: ${score}`;
+            round = 1;
+            roundText.text = `Round: ${round}`;
+            lives = 3;
+            livesText.text = `Lives: ${lives}`;
+            timer = 30;
+            timerText.text = `Time: ${timer}`;
+            gameOverText.visible = false;
+            resetButton.visible = false;
+            app.ticker.start();
+            removeBubbles();
+            intervalId = setInterval(() => {
+                const bubble = new Bubble();
+                bubbles.push(bubble);
+            }, bubbleInterval);
+        }
+
+        function removeBubbles() {
+            // Remove all bubbles from the stage
+            for (const bubble of bubbles) {
+                app.stage.removeChild(bubble.sprite);
+            }
+            bubbles.length = 0;
+        }
+    </script>
        </div>
        
       </div>    
