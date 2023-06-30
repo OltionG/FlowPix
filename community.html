@@ -5,6 +5,8 @@
     <link
       href="https://fonts.googleapis.com/css?family=Poppins:300,900&display=swap" rel="stylesheet"/>
     <link href="main.css" rel="stylesheet" />
+    <script src="https://pixijs.download/release/pixi.js"></script>
+
   </head>
   <script>
     var playing = false;
@@ -59,9 +61,12 @@
     <div style="background-color:whitesmoke; height: 3%; opacity: 70%;">
     </div>
     <div class="about">
+      
       <div class="home-about" style="flex-direction: column; align-items: center; letter-spacing: 1px; line-height: 2;">
+        <div id="pixi-container" style="justify-content: center;"></div>
         <h2>Community</h2>
         <div class="columns">
+         
             <p style="max-width: 500px;">
               <video class="about__video" id="aboutVideo" controls loop>
                 <source src="video.mp4" type="video/mp4">
@@ -115,6 +120,7 @@
       </div>
     </main>
     <script src="observers.js"></script>
+    <script src="pixi.js"></script>
     </main>
   </body>
 </html>
